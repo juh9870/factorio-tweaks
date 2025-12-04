@@ -1,0 +1,13 @@
+{
+  "name": "juh-tweaks",
+  "version": "1.1.0",
+  "title": "juh9870 Tweaks",
+  "author": "juh9870",
+  "homepage": "[HOMEPAGE/REPO URL]",
+  "description": "[SHORT DESCRIPTION]",
+  "factorio_version": "2.0",
+  "dependencies": [
+    "base",
+    "(?) se-space-trains"
+  ]
+}
