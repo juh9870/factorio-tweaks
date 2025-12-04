@@ -293,7 +293,7 @@ end
 
 if mods["Paracelsin"] and mods["Cerys-Moon-of-Fulgora"] and mods["Krastorio2-spaced-out"] then
 	local recipe = data.raw["recipe"]["paracelsin-processing-units-from-nitric-acid"]
-	patchRecipe(recipe, { ["advanced-circuit"] = { amountMult = 14 / 16 } })
+	patchRecipe(recipe, { ["electronic-circuit"] = { amountMult = 12 / 16 } })
 
 	recipe.icon = nil
 	recipe.icons = {
