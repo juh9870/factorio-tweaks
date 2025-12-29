@@ -54,6 +54,8 @@ local function patchRecipe(recipe, replacements)
 end
 
 if mods["wret-beacon-rebalance-mod"] then
+	local vanilla_beacon = data.raw["beacon"]["beacon"]
+
 	if mods["Krastorio2-spaced-out"] then
 		local singularity_beacon = data.raw["beacon"]["kr-singularity-beacon"]
 		singularity_beacon.module_slots = 15
@@ -94,6 +96,20 @@ if mods["wret-beacon-rebalance-mod"] then
 				"kr-singularity-tech-card",
 			}
 		end
+	end
+
+	if mods["Age-of-Production"] then
+		local smol_beacon = data.raw["beacon"]["aop-transmitter"]
+		smol_beacon.module_slots = 2
+		smol_beacon.profile = { 1, 0 }
+	end
+
+	if mods["linox"] then
+		local linox_beacon = data.raw["beacon"]["linox-building_erbium-beacon"]
+		linox_beacon.module_slots = vanilla_beacon.module_slots
+		linox_beacon.profile = { 1, 0 }
+		linox_beacon.distribution_effectivity = 2
+		linox_beacon.energy_usage = "700kW"
 	end
 
 	data.raw["beacon"]["wr-beacon-3"].profile = { 1, 0 }
