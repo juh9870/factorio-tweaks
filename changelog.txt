@@ -1,0 +1,7 @@
+---------------------------------------------------------------------------------------------------
+Version: 1.2.0
+Date: 2025-12-29
+  Features:
+    - AoP and Linox beacons support for beacon rebalance compat
+  Bugfixes:
+    - broken versioning
