@@ -2,49 +2,65 @@
 ---@field name? string
 ---@field type? ("item"|"fluid")
 ---@field amountMult? number
+---@field delete? boolean
+---@field setChance? number
 
 ---@alias ItemReplacementMap {[string]: ItemReplacement}
 
 ---This function patches the recipe to replace inputs and outputs with
 ---different items or fluids
 ---
----Items can't be swapped into fluids and vice versa
----
 ---Item/Fluid amount will not go below 1
----@param recipe data.RecipePrototype
+---@param recipe data.RecipePrototype|data.RecipeID
 ---@param replacements ItemReplacementMap
 local function patchRecipe(recipe, replacements)
+	if type(recipe) == "string" then
+		recipe = data.raw["recipe"][recipe]
+	end
 	if recipe.ingredients then
-		for ingName, ing in pairs(recipe.ingredients) do
-			if replacements[ing.name] then
-				local newIng = replacements[ing.name]
-				if newIng.type then
-					ing.type = newIng.type
+		for idx = #recipe.ingredients, 1, -1 do
+			local ing = recipe.ingredients[idx]
+			local newIng = replacements[ing.name]
+			if newIng then
+				if newIng.delete then
+					table.remove(recipe.ingredients, idx)
+				else
+					if newIng.type then
+						ing.type = newIng.type
+					end
+					if newIng.name then
+						ing.name = newIng.name
+					end
+					if newIng.amountMult then
+						ing.amount = math.max(1, math.floor(ing.amount * newIng.amountMult + 0.5))
+					end
+					recipe.ingredients[idx] = ing
 				end
-				if newIng.name then
-					ing.name = newIng.name
-				end
-				if newIng.amountMult then
-					ing.amount = math.max(1, math.floor(ing.amount * newIng.amountMult))
-				end
-				recipe.ingredients[ingName] = ing
 			end
 		end
 	end
 	if recipe.results then
-		for prodName, prod in pairs(recipe.results) do
+		for idx = #recipe.results, 1, -1 do
+			local prod = recipe.results[idx]
+			local newProd = replacements[prod.name]
 			if replacements[prod.name] then
-				local newProd = replacements[prod.name]
-				if newProd.type then
-					prod.type = newProd.type
+				if newProd.delete then
+					table.remove(recipe.results, idx)
+				else
+					if newProd.type then
+						prod.type = newProd.type
+					end
+					if newProd.name then
+						prod.name = newProd.name
+					end
+					if newProd.amountMult then
+						prod.amount = math.max(1, math.floor(prod.amount * newProd.amountMult))
+					end
+					if newProd.setChance then
+						prod.probability = newProd.setChance
+					end
+					recipe.results[idx] = prod
 				end
-				if newProd.name then
-					prod.name = newProd.name
-				end
-				if newProd.amountMult then
-					prod.amount = math.max(1, math.floor(prod.amount * newProd.amountMult))
-				end
-				recipe.results[prodName] = prod
 			end
 		end
 	end
@@ -335,4 +351,18 @@ if mods["Paracelsin"] and mods["Cerys-Moon-of-Fulgora"] and mods["Krastorio2-spa
 			draw_background = true,
 		},
 	}
+end
+
+if mods["SchallUraniumProcessing"] then
+	if mods["Krastorio2-spaced-out"] then
+		patchRecipe("uranium-processing", {
+			["uranium-235"] = {
+				delete = true
+			},
+			["uranium-238"] = {
+				name = "uranium-concentrate",
+				setChance = 1,
+			}
+		})
+	end
 end
