@@ -2,6 +2,7 @@
 ---@field name? string
 ---@field type? ("item"|"fluid")
 ---@field amountMult? number
+---@field amountAdd? number
 ---@field delete? boolean
 ---@field setChance? number
 
@@ -34,6 +35,9 @@ local function patchRecipe(recipe, replacements)
 					if newIng.amountMult then
 						ing.amount = math.max(1, math.floor(ing.amount * newIng.amountMult + 0.5))
 					end
+					if newIng.amountAdd then
+						ing.amount = math.max(1, math.floor(ing.amount + newIng.amountAdd + 0.5))
+					end
 					recipe.ingredients[idx] = ing
 				end
 			end
@@ -54,7 +58,10 @@ local function patchRecipe(recipe, replacements)
 						prod.name = newProd.name
 					end
 					if newProd.amountMult then
-						prod.amount = math.max(1, math.floor(prod.amount * newProd.amountMult))
+						prod.amount = math.max(1, math.floor(prod.amount * newProd.amountMult + 0.5))
+					end
+					if newProd.amountAdd then
+						prod.amount = math.max(1, math.floor(prod.amount + newProd.amountAdd + 0.5))
 					end
 					if newProd.setChance then
 						prod.probability = newProd.setChance
@@ -356,12 +363,40 @@ if mods["SchallUraniumProcessing"] then
 	if mods["Krastorio2-spaced-out"] then
 		patchRecipe("uranium-processing", {
 			["uranium-235"] = {
-				delete = true
+				delete = true,
 			},
 			["uranium-238"] = {
 				name = "uranium-concentrate",
 				setChance = 1,
-			}
+			},
 		})
+	end
+end
+
+if mods["pelagos"] and mods["Krastorio2-spaced-out"] then
+	local smelting_recipe = data.raw["recipe"]["calciner-advanced-steel-smelting"]
+	if smelting_recipe.results[1].amount ~= 3 then
+		smelting_recipe.results = { { type = "item", name = "steel-plate", amount = 3 } }
+		smelting_recipe.icon = nil;
+		smelting_recipe.icons = {
+		{
+			icon = "__Krastorio2Assets__/icons/items/steel-plate.png",
+			icon_size = 64,
+			scale = 0.65,
+			shift = { 2, 2 },
+			draw_background = true,
+		},
+		{
+			icon = "__pelagos__/graphics/activated-carbon.png",
+			icon_size = 64,
+			scale = 0.45,
+			shift = { -11, -11 },
+			draw_background = true,
+		},
+	}
+
+		data.raw["recipe"]["calciner-coal-purification"].ingredients =
+			{ { type = "item", name = "kr-coke", amount = 3 } }
+		data.raw["recipe"]["calciner-coal-purification"].results = { { type = "item", name = "carbon", amount = 2 } }
 	end
 end
