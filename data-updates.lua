@@ -181,29 +181,11 @@ if mods["Paracelsin"] and mods["Cerys-Moon-of-Fulgora"] and mods["Krastorio2-spa
 	local recipe = data.raw["recipe"]["paracelsin-processing-units-from-nitric-acid"]
 
 	recipe.icon = nil
-	recipe.icons = {
-		{
-			icon = "__base__/graphics/icons/processing-unit.png",
-			icon_size = 64,
-			scale = 0.65,
-			shift = { 2, 2 },
-			draw_background = true,
-		},
-		{
-			icon = "__Krastorio2Assets__/icons/fluids/nitric-acid.png",
-			icon_size = 64,
-			scale = 0.45,
-			shift = { -11, -11 },
-			draw_background = true,
-		},
-		{
-			icon = "__Paracelsin-Graphics__/graphics/icons/zinc-solder.png",
-			icon_size = 64,
-			scale = 0.45,
-			shift = { 11, -11 },
-			draw_background = true,
-		},
-	}
+	recipe.icons = api.build_icons_subscripts({
+		base = "__base__/graphics/icons/processing-unit.png",
+		top_left = "__Krastorio2Assets__/icons/fluids/nitric-acid.png",
+		top_right = "__Paracelsin-Graphics__/graphics/icons/zinc-solder.png",
+	})
 end
 
 if mods["SchallUraniumProcessing"] then
@@ -224,7 +206,7 @@ if mods["pelagos"] and mods["Krastorio2-spaced-out"] then
 	local smelting_recipe = data.raw["recipe"]["calciner-advanced-steel-smelting"]
 	if smelting_recipe.results[1].amount ~= 3 then
 		smelting_recipe.results = { { type = "item", name = "steel-plate", amount = 3 } }
-		smelting_recipe.icon = nil;
+		smelting_recipe.icon = nil
 		smelting_recipe.icons = {
 		{
 			icon = "__Krastorio2Assets__/icons/items/steel-plate.png",
