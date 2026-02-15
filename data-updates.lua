@@ -13,7 +13,7 @@ if mods["wret-beacon-rebalance-mod"] then
 		singularity_beacon.profile = { 1, 0 }
 
 		if settings.startup["wret-overload-enable-beaconmk3"].value == true then
-local substation = mods["snouz_better_substation"] and "snouz_better_substation" or "substation"
+			local substation = mods["snouz_better_substation"] and "snouz_better_substation" or "substation"
 			data.raw["recipe"]["wr-beacon-3"].ingredients = {
 				{ type = "item", name = "wr-beacon-2", amount = 1 },
 				{ type = "item", name = "kr-imersium-beam", amount = 4 },
@@ -208,24 +208,37 @@ if mods["pelagos"] and mods["Krastorio2-spaced-out"] then
 		smelting_recipe.results = { { type = "item", name = "steel-plate", amount = 3 } }
 		smelting_recipe.icon = nil
 		smelting_recipe.icons = {
-		{
-			icon = "__Krastorio2Assets__/icons/items/steel-plate.png",
-			icon_size = 64,
-			scale = 0.65,
-			shift = { 2, 2 },
-			draw_background = true,
-		},
-		{
-			icon = "__pelagos__/graphics/activated-carbon.png",
-			icon_size = 64,
-			scale = 0.45,
-			shift = { -11, -11 },
-			draw_background = true,
-		},
-	}
+			{
+				icon = "__Krastorio2Assets__/icons/items/steel-plate.png",
+				icon_size = 64,
+				scale = 0.65,
+				shift = { 2, 2 },
+				draw_background = true,
+			},
+			{
+				icon = "__pelagos__/graphics/activated-carbon.png",
+				icon_size = 64,
+				scale = 0.45,
+				shift = { -11, -11 },
+				draw_background = true,
+			},
+		}
 
 		data.raw["recipe"]["calciner-coal-purification"].ingredients =
 			{ { type = "item", name = "kr-coke", amount = 3 } }
 		data.raw["recipe"]["calciner-coal-purification"].results = { { type = "item", name = "carbon", amount = 2 } }
 	end
+end
+
+if mods["electric-tiles"] and mods["Foundations"] and mods["space-platform-for-ground"] then
+	data.raw["recipe"]["F077ET-esp-foundation"].ingredients = {
+		{ type = "item", name = "copper-cable", amount = 20 },
+		{ type = "item", name = "steel-plate", amount = 15 },
+		{ type = "item", name = "landfill", amount = 1 },
+	}
+	data.raw["recipe"]["F077ET-esp-foundation"].results = {
+		{ type = "item", name = "F077ET-esp-foundation", amount = 1 },
+	}
+
+	api.hideRecipes({ "space-platform-for-ground", "esp-foundation" })
 end
