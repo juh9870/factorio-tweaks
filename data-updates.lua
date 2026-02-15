@@ -13,13 +13,14 @@ if mods["wret-beacon-rebalance-mod"] then
 		singularity_beacon.profile = { 1, 0 }
 
 		if settings.startup["wret-overload-enable-beaconmk3"].value == true then
+local substation = mods["snouz_better_substation"] and "snouz_better_substation" or "substation"
 			data.raw["recipe"]["wr-beacon-3"].ingredients = {
 				{ type = "item", name = "wr-beacon-2", amount = 1 },
 				{ type = "item", name = "kr-imersium-beam", amount = 4 },
 				{ type = "item", name = "kr-ai-core", amount = 20 },
 				{ type = "item", name = "copper-cable", amount = 30 },
 				{ type = "item", name = "quantum-processor", amount = 40 },
-				{ type = "item", name = "snouz_better_substation", amount = 4 },
+				{ type = "item", name = substation, amount = 4 },
 				{ type = "item", name = "kr-advanced-radar", amount = 4 },
 			}
 			data.raw["technology"]["effect-transmission-3"].prerequisites = {
