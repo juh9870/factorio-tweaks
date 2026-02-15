@@ -61,6 +61,14 @@ local substation = mods["snouz_better_substation"] and "snouz_better_substation"
 		linox_beacon.energy_usage = "700kW"
 	end
 
+	if mods["lubrication_tower"] then
+		local tower = data.raw["beacon"]["lubrication-tower"]
+		tower.module_slots = vanilla_beacon.module_slots * 1.5
+		tower.profile = { 1, 0 }
+		tower.distribution_effectivity = 1.5
+		tower.energy_usage = "120kW"
+	end
+
 	data.raw["beacon"]["wr-beacon-3"].profile = { 1, 0 }
 	data.raw["beacon"]["wr-beacon-2"].profile = { 1, 0 }
 	data.raw["beacon"]["beacon"].profile = { 1, 0 }
