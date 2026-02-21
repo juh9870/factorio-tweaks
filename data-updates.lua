@@ -242,3 +242,11 @@ if mods["electric-tiles"] and mods["Foundations"] and mods["space-platform-for-g
 
 	api.hideRecipes({ "space-platform-for-ground", "esp-foundation" })
 end
+
+if mods["EditorExtensions"] and mods["blueprint-sandboxes"] then
+	for _, recipe in pairs(data.raw["recipe"]) do
+		if recipe.category == "ee-testing-tool" or recipe.name:sub(1,5) == "bpsb-" then
+			api.hideRecipes({recipe})
+		end
+	end
+end
